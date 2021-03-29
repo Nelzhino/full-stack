@@ -1,0 +1,50 @@
+package com.udemy.serverApps.converter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.udemy.serverApps.entities.Todo;
+import com.udemy.serverApps.models.TodoModel;
+
+public class TodoConverter {
+
+	
+	
+	
+	public static List<Todo> convertModelToEntity(List<TodoModel> todoModels){
+		
+		List<Todo> todos = new ArrayList<>();
+		
+		for (TodoModel todoModel : todoModels) {
+			
+			Todo todo = new Todo();
+			todo.setId(todoModel.getId());
+			todo.setDescription(todoModel.getDescription());
+			todo.setTargetDate(todoModel.getTargetDate());
+			todo.setUsername(todoModel.getUsername());
+			todo.setDone(todoModel.isDone());			
+		}
+		
+		return todos;
+	}
+	
+	
+	public static List<TodoModel> convertEntityToModel(List<Todo> todo){
+		
+		List<Todo> todos = new ArrayList<>();
+		
+		for (TodoModel todoModel : todoModels) {
+			
+			Todo todo = new Todo();
+			todo.setId(todoModel.getId());
+			todo.setDescription(todoModel.getDescription());
+			todo.setTargetDate(todoModel.getTargetDate());
+			todo.setUsername(todoModel.getUsername());
+			todo.setDone(todoModel.isDone());			
+		}
+		
+		return todos;
+	}
+	
+	
+}

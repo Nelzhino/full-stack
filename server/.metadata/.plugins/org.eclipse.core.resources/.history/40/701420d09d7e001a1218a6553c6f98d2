@@ -1,0 +1,9 @@
+logging.level.org.springframework= info
+
+#spring.security.user.name=nelcarto
+#spring.security.user.password=ftpHOME
+
+jwt.signing.key.secret=mySecret
+jwt.get.token.uri=/authenticate
+jwt.refresh.token.uri=/refresh
+jwt.http.request.header=Authorization

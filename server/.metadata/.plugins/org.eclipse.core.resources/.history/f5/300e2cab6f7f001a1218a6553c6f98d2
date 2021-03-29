@@ -1,0 +1,80 @@
+package com.udemy.serverApps.services.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.udemy.serverApps.models.TodoModel;
+import com.udemy.serverApps.services.ITodoService;
+
+@Service
+public class TodoServiceImpl implements ITodoService{
+
+	private static List<TodoModel> todoModels = new ArrayList<>();
+	private static int counter = 0;
+	
+	static {
+		todoModels.add(new TodoModel(++counter, "ncarabali", "Learn to speak english", true, new Date() ));
+		todoModels.add(new TodoModel(++counter, "ncarabali", "Become an expert at Angular", true, new Date() ));
+		todoModels.add(new TodoModel(++counter, "ncarabali", "Visit Japan or India", true, new Date() ));
+	}
+	
+	@Override
+	public List<TodoModel> getListAll(String username) {
+		
+		Collections.sort(todoModels, new Comparator<TodoModel>() {
+			@Override
+			public int compare(TodoModel o1, TodoModel o2) {
+				return (int) (o1.getId() - o2.getId());
+			}
+		});
+		return todoModels; 
+	}
+
+	@Override
+	public TodoModel deleteBy(long id) {
+		
+		TodoModel todoModel = findById(id);
+		
+		if(todoModel == null )
+			return null;
+		
+		todoModels.remove(todoModel);
+		
+		return todoModel;
+	}
+
+	@Override
+	public TodoModel findById(long id) {
+		
+		for (TodoModel todoModel : todoModels) {
+			if(todoModel.getId() == id) {
+				return todoModel;
+			}
+		}
+		
+		return null;
+	}
+
+	@Override
+	public TodoModel save(TodoModel todoModel) {
+		
+		if(todoModel.getId() == -1) {
+			todoModel.setId(++counter);
+			todoModels.add(todoModel);
+		}
+		else {
+			this.deleteBy(todoModel.getId());
+			todoModels.add(todoModel);
+		}
+		
+		return todoModel;
+	}
+
+	
+	
+}

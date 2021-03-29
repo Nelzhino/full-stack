@@ -1,0 +1,5 @@
+package com.udemy.serverApps.models;
+
+public class AutenticationBean {
+
+}

@@ -1,0 +1,71 @@
+package com.udemy.serverApps.services.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.udemy.serverApps.converter.TodoConverter;
+import com.udemy.serverApps.entities.Todo;
+import com.udemy.serverApps.models.TodoModel;
+import com.udemy.serverApps.repositories.TodoRepository;
+import com.udemy.serverApps.services.ITodoService;
+
+@Service
+public class TodoServiceJpaImpl implements ITodoService{
+	
+	@Autowired
+	private TodoRepository todoRepository;
+	
+	@Override
+	public List<TodoModel> getListAll(String username) {
+		return TodoConverter.convertEntityToModel(todoRepository.findByUsername(username));
+	}
+
+	@Override
+	public TodoModel deleteBy(long id) {
+		
+		TodoModel todoModel = findById(id);
+		
+		if(todoModel == null )
+			return null;
+		
+		todoModels.remove(todoModel);
+		
+		return todoModel;
+	}
+
+	@Override
+	public TodoModel findById(long id) {
+		
+		for (TodoModel todoModel : todoModels) {
+			if(todoModel.getId() == id) {
+				return todoModel;
+			}
+		}
+		
+		return null;
+	}
+
+	@Override
+	public TodoModel save(TodoModel todoModel) {
+		
+		if(todoModel.getId() == -1) {
+			todoModel.setId(++counter);
+			todoModels.add(todoModel);
+		}
+		else {
+			this.deleteBy(todoModel.getId());
+			todoModels.add(todoModel);
+		}
+		
+		return todoModel;
+	}
+
+	
+	
+}

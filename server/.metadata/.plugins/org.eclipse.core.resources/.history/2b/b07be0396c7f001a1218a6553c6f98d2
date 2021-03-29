@@ -1,0 +1,14 @@
+package com.udemy.serverApps.repositories;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.udemy.serverApps.entities.Todo;
+import com.udemy.serverApps.models.TodoModel;
+
+public interface TodoRepository extends JpaRepository<Todo, Long> {
+
+	
+	List<Todo> findByUsername(String username);
+}

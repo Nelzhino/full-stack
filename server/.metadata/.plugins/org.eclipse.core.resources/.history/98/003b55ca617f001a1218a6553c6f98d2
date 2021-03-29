@@ -1,0 +1,30 @@
+package com.udemy.serverApps.converter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.udemy.serverApps.entities.Todo;
+import com.udemy.serverApps.models.TodoModel;
+
+public class TodoConverter {
+
+	
+	
+	
+	public static List<Todo> convertModelToEntity(List<TodoModel> todoModels){
+		
+		List<Todo> todos = new ArrayList<>();
+		
+		
+		for (TodoModel todo : todoModels) {
+			
+		}
+		
+		
+		return todos;
+	}
+	
+	
+	
+	
+}
