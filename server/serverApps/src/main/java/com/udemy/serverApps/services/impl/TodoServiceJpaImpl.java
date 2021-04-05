@@ -2,6 +2,7 @@ package com.udemy.serverApps.services.impl;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,11 @@ public class TodoServiceJpaImpl implements ITodoService{
 
 	@Override
 	public TodoModel findById(long id) {
-		return TodoConverter.convertEntityToModel(todoRepository.findById(id).get());
+		Optional<Todo> todo = todoRepository.findById(id);
+		if(todo.isPresent()) {
+			return TodoConverter.convertEntityToModel(todo.get());			
+		}
+		return new TodoModel();
 	}
 
 	@Override

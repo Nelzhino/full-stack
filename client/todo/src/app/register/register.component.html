@@ -1,0 +1,29 @@
+<H1>Register!</H1>
+
+<div class="container">
+    <div class="alert alert-warning" *ngIf='invalidRegister'>{{messageInvalid}}</div>
+    <div class="alert alert-success" *ngIf='successfulRegister'>{{messageSuccessful}}</div>
+
+    <div class="form-group">
+        <label>Email address</label>
+        <input type="text" class="form-control" placeholder="Enter username" name="username" [(ngModel)]="username">
+        <small class="form-text text-muted">We'll never share your username with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password">
+        <small class="form-text text-muted">We'll never share your password with anyone else.</small>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input type="checkbox" class="form-check-input" (change)="addRol('ROLE_USER1', $event)">
+        <label class="form-check-label">Support</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input type="checkbox" class="form-check-input" (change)="addRol('ROLE_USER2', $event)">
+        <label class=" form-check-label ">Secretary</label>
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary mr-4" (click)=handleSaveRegister()>Save</button>
+    </div>
+</div>

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.udemy.serverApps.dto.UserDto;
 import com.udemy.serverApps.jwt.JwtTokenUtil;
 import com.udemy.serverApps.jwt.JwtUserDetails;
+import com.udemy.serverApps.services.IUserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -42,6 +43,9 @@ public class JwtAuthenticationRestController {
 
 	@Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;
+	
+	@Autowired
+	private IUserService userService;
 	
 
 	@PostMapping(value = "${jwt.get.token.uri}")
@@ -73,10 +77,15 @@ public class JwtAuthenticationRestController {
 		}
 	}
 
-//	@PostMapping(value = "${jwt.register.user.uri}")
-//	public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
-//		return ResponseEntity.ok(jwtInMemoryUserDetailsService.save(user));
-//	}
+	@PostMapping(value = "${jwt.register.user.uri}")
+	public ResponseEntity<?> saveUser(@RequestBody UserDto user) {
+		try {
+			user.setCreateUser(userService.save(user));
+			return ResponseEntity.ok(user);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
 	@ExceptionHandler({ AuthenticationException.class })
 	public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {

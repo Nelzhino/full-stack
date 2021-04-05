@@ -7,6 +7,7 @@ public class UserDto {
 	private String username;
 	private String password;
 	private List<String> roles;
+	private boolean createUser;
 
 	public String getUsername() {
 		return username;
@@ -30,6 +31,14 @@ public class UserDto {
 
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
+	}
+
+	public boolean isCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(boolean createUser) {
+		this.createUser = createUser;
 	}
 
 

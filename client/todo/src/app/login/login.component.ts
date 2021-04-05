@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
   errorMessage = 'Invalid Credentials';
   invalidLogin = false;
 
-  //Router
-  //Angular.giveMeRouter
-  //Dependency Injection
+  // Router
+  // Angular.giveMeRouter
+  // Dependency Injection
   constructor(private router: Router,
     private hardcodedAuthenticationService: HardcodedAuthenticationService,
     private basicAuthenticationService: BasicAuthenticationService) { }
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   handleLogin() {
     if (this.hardcodedAuthenticationService.authenticate(this.username, this.password)) {
       // Redirect to Welcome Page
-      this.router.navigate(['welcome', this.username])
+      this.router.navigate(['welcome', this.username]);
       this.invalidLogin = false;
     } else {
       this.invalidLogin = true;
@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
     this.basicAuthenticationService.executeJWTAuthenticationService(this.username, this.password)
         .subscribe(
           data => {
-            console.log(data)
             this.router.navigate(['welcome', this.username]);
             this.invalidLogin = false;
           },
@@ -60,6 +59,10 @@ export class LoginComponent implements OnInit {
             this.invalidLogin = true;
           }
         );
+  }
+
+  handleRegisterUser() {
+    this.router.navigate(['register']);
   }
 
 }

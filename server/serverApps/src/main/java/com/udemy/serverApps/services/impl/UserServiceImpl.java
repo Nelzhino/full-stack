@@ -23,20 +23,27 @@ public class UserServiceImpl implements IUserService{
 	private PasswordEncoder bcryptEncoder;
 	
 	@Override
-	public void save(UserDto userDto) {
+	public boolean save(UserDto userDto) {
 		User user = new User();
-		user.setUsername(userDto.getUsername());
-		user.setPassword(bcryptEncoder.encode(userDto.getPassword()));
-
-		Set<UserRol> userRoles = new HashSet<>();
-		userDto.getRoles().forEach( nameRol -> {
-			UserRol rol = new UserRol();
-			rol.setRol(nameRol);
-			rol.setUser(user);
-			userRoles.add(rol);			
-		});	
+		User userFind = userRepository.findByUsername(userDto.getUsername());
+		boolean flag = false;
+		if(userFind == null) {
+			user.setUsername(userDto.getUsername());
+			user.setPassword(bcryptEncoder.encode(userDto.getPassword()));
+			
+			Set<UserRol> userRoles = new HashSet<>();
+			userDto.getRoles().forEach( nameRol -> {
+				UserRol rol = new UserRol();
+				rol.setRol(nameRol);
+				rol.setUser(user);
+				userRoles.add(rol);			
+			});	
+			user.setRoles(userRoles);
+			userRepository.save(user);
+			flag = true;
+		}
 		
-		userRepository.save(user);
+		return flag;
 	}
 
 	

@@ -1,14 +1,14 @@
 package com.udemy.serverApps.jwt;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -77,7 +77,7 @@ public class JwtTokenUtil implements Serializable {
 	headerClaims.put("typ","JWT");//"typ"
 
 	return Jwts.builder().setHeader(headerClaims).setClaims(claims).setSubject(subject).setIssuedAt(createdDate)
-			.setExpiration(expirationDate).signWith(SignatureAlgorithm.HS256, secret.getBytes()).compact();
+			.setExpiration(expirationDate).signWith(SignatureAlgorithm.HS256, secret).compact();
 	
   }
 
@@ -93,11 +93,12 @@ public class JwtTokenUtil implements Serializable {
     claims.setIssuedAt(createdDate);
     claims.setExpiration(expirationDate);
 
-    return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, secret.getBytes()).compact();
+    return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, secret).compact();
   }
 
   public Boolean validateToken(String token, UserDetails userDetails) {
-    JwtUserDetails user = (JwtUserDetails) userDetails;
+    JwtUserDetails user = new JwtUserDetails(userDetails.getUsername(), 
+    		userDetails.getPassword(), new ArrayList<GrantedAuthority>(userDetails.getAuthorities()));
     final String username = getUsernameFromToken(token);
     return (username.equals(user.getUsername()) && !isTokenExpired(token));
   }

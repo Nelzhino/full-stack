@@ -52,17 +52,15 @@ public class TodosJpaController {
 		return todoModel;
 	}
 	
-	@PutMapping("/jpa/users/{username}/todos/{id}")
-	public ResponseEntity<TodoModel> updateTodo(@PathVariable String username, 
-			@PathVariable long id, @RequestBody TodoModel todoModel) {
+	@PutMapping("/jpa/users/todos/{id}")
+	public ResponseEntity<TodoModel> updateTodo(@PathVariable long id, @RequestBody TodoModel todoModel) {
 		
 		TodoModel todoModelUpdated = todoService.save(todoModel);
 		return new ResponseEntity<TodoModel>(todoModelUpdated, HttpStatus.OK);
 	}
 	
-	@PostMapping("/jpa/users/{username}/todos")
-	public ResponseEntity<Void> createTodo(@PathVariable String username, @RequestBody TodoModel todoModel) {
-		
+	@PostMapping("/jpa/users/todos")
+	public ResponseEntity<Void> createTodo(@RequestBody TodoModel todoModel) {
 		TodoModel createdTodo = todoService.save(todoModel);
 		
 		//Location

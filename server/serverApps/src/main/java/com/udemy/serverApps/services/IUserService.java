@@ -4,5 +4,5 @@ import com.udemy.serverApps.dto.UserDto;
 
 public interface IUserService {
 
-	void save (UserDto user);
+	boolean save (UserDto user);
 }
